@@ -3,57 +3,52 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>EyePose — Demo</title>
+<title>EyePose — Demonstration of hand keypoint prediction</title>
 <style>
 :root{
-  --ink:#111827; --muted:#6b7280; --ring:#e5e7eb; --card:#ffffff;
-  --shadow:0 8px 24px rgba(0,0,0,.06); --radius:12px;
-  /* 统一展示框纵横比：如果素材更接近 4:3，把 16/9 改成 4/3 即可全局生效 */
-  --ar: 16/9;
+  --ink:#111827;
+  --muted:#6b7280;
+  --ring:#e5e7eb;
+  --card:#ffffff;
+  --shadow:0 8px 24px rgba(0,0,0,.06);
+  --radius:12px;
+  --ar:16/9;
 }
 *{box-sizing:border-box}
-body{font-family:system-ui,Arial,Helvetica,sans-serif;margin:24px;color:var(--ink);background:#fff}
-h1{font-size:28px;margin:0 0 6px;font-weight:700}
-.section{margin-top:28px}
-.section h2{font-size:20px;margin:4px 0 14px}
-
-.controls{display:flex;gap:10px;margin:10px 0 18px;flex-wrap:wrap}
-.btn{border:1px solid var(--ring);background:#f9fafb;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
-.btn.primary{background:#0b5fff;border-color:#0b5fff;color:#fff}
-
-.row{display:grid;grid-template-columns:repeat(3,minmax(260px,1fr));gap:18px}
+body{font-family:system-ui,Arial,Helvetica,sans-serif;margin:32px;color:var(--ink);background:#fff}
+.header{text-align:center;margin-bottom:18px}
+h1{font-size:30px;margin:0;font-weight:700}
+.lead{max-width:900px;margin:10px auto 0;color:var(--muted);font-size:15px;line-height:1.6}
+.controls{display:flex;gap:12px;justify-content:center;margin:18px 0 28px}
+.btn{border:1px solid var(--ring);background:#0b5fff;color:#fff;border-radius:8px;padding:8px 14px;font-weight:600;cursor:pointer}
+.btn.secondary{background:#f3f4f6;color:var(--ink);border-color:var(--ring)}
+.row{display:grid;grid-template-columns:repeat(3,minmax(260px,1fr));gap:18px;margin-bottom:28px}
 .card{background:var(--card);border:1px solid var(--ring);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px}
-.card h3{font-size:14px;margin:4px 0 10px;color:#111}
-
-/* 统一媒体容器高度，不裁剪 */
+.card h3{font-size:14px;margin:6px 0 10px;color:#111}
 .media{position:relative;width:100%;aspect-ratio:var(--ar);background:#ffffff;border-radius:8px;overflow:hidden;border:1px solid var(--ring)}
-.media>video,.media>img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;object-position:center} /* 等比适配、无裁剪 */
-
-/* 一键切换：拉伸填充（可能变形，PPT式“拉伸/压缩”） */
-body.stretch-mode .media>video,
-body.stretch-mode .media>img{object-fit:fill}   /* 填满容器，不留边，可能变形 */
-
+.media>video,.media>img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain;object-position:center}
 @media (max-width:980px){.row{grid-template-columns:1fr}}
-footer{margin-top:28px;color:var(--muted);font-size:12px}
+footer{margin-top:28px;color:var(--muted);font-size:12px;text-align:center}
 </style>
 </head>
 <body>
-  <h1>EyePose — Demo</h1>
+  <header class="header">
+    <h1>EyePose: DCIR-Based Gesture Demonstration</h1>
+    <p class="lead">This page presents synchronized visual comparisons among Differential Channel Impulse Responses (DCIR), ground-truth hand-pose annotations derived from the MediaPipe, and system-predicted keypoint trajectories(2X Slower), covering several representative gesture categories. The visualization aims to facilitate academic evaluation and provide a supplementary demonstration of the EyePose system.</p>
+  </header>
+
   <div class="controls">
-    <button id="playAll"  class="btn primary">Play All</button>
-    <button id="pauseAll" class="btn">Pause All</button>
-    <button id="muteAll"  class="btn">Mute All</button>
-    <button id="toggleFit" class="btn">切换为拉伸填充</button>
+    <button id="playAll" class="btn">Play All</button>
+    <button id="pauseAll" class="btn secondary">Pause All</button>
   </div>
 
-  <!-- Fist–Open -->
-  <section class="section">
-    <h2>Fist–Open</h2>
+  <section>
+    <h2 style="margin:0 0 12px 0;font-size:20px">Fist–Open</h2>
     <div class="row">
       <figure class="card">
         <h3>DCIR</h3>
         <div class="media">
-          <img loading="lazy" src="./assets/images/DCIR_Fist-Open.png" alt="DCIR Fist-Open">
+          <img src="./assets/images/DCIR_Fist-Open.png" alt="DCIR Fist-Open">
         </div>
       </figure>
       <figure class="card">
@@ -65,7 +60,7 @@ footer{margin-top:28px;color:var(--muted);font-size:12px}
         </div>
       </figure>
       <figure class="card">
-        <h3>Model Prediction</h3>
+        <h3>Prediction</h3>
         <div class="media">
           <video controls preload="metadata" playsinline>
             <source src="./assets/videos/prediction/ypred_Fist-Open.mp4" type="video/mp4">
@@ -75,43 +70,115 @@ footer{margin-top:28px;color:var(--muted);font-size:12px}
     </div>
   </section>
 
-  <!-- Gather Fingers -->
-  <section class="section">
-    <h2>Gather Fingers</h2>
+  <section>
+    <h2 style="margin:0 0 12px 0;font-size:20px">Gather Fingers</h2>
     <div class="row">
-      <figure class="card"><h3>DCIR</h3><div class="media"><img loading="lazy" src="./assets/images/DCIR_Gather-Fingers.png" alt="DCIR Gather-Fingers"></div></figure>
-      <figure class="card"><h3>Ground Truth</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/groundtruth/GT_Gather-Fingers.mp4" type="video/mp4"></video></div></figure>
-      <figure class="card"><h3>Model Prediction</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/prediction/ypred_Gather-Fingers.mp4" type="video/mp4"></video></div></figure>
+      <figure class="card">
+        <h3>DCIR</h3>
+        <div class="media">
+          <img src="./assets/images/DCIR_Gather-Fingers.png" alt="DCIR Gather-Fingers">
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Ground Truth</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/groundtruth/GT_Gather-Fingers.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Prediction</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/prediction/ypred_Gather-Fingers.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
     </div>
   </section>
 
-  <!-- Pinch -->
-  <section class="section">
-    <h2>Pinch</h2>
+  <section>
+    <h2 style="margin:0 0 12px 0;font-size:20px">Pinch</h2>
     <div class="row">
-      <figure class="card"><h3>DCIR</h3><div class="media"><img loading="lazy" src="./assets/images/DCIR_Pinch.png" alt="DCIR Pinch"></div></figure>
-      <figure class="card"><h3>Ground Truth</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/groundtruth/GT_Pinch.mp4" type="video/mp4"></video></div></figure>
-      <figure class="card"><h3>Model Prediction</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/prediction/ypred_Pinch.mp4" type="video/mp4"></video></div></figure>
+      <figure class="card">
+        <h3>DCIR</h3>
+        <div class="media">
+          <img src="./assets/images/DCIR_Pinch.png" alt="DCIR Pinch">
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Ground Truth</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/groundtruth/GT_Pinch.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Prediction</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/prediction/ypred_Pinch.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
     </div>
   </section>
 
-  <!-- Push–Pull -->
-  <section class="section">
-    <h2>Push–Pull</h2>
+  <section>
+    <h2 style="margin:0 0 12px 0;font-size:20px">Push–Pull</h2>
     <div class="row">
-      <figure class="card"><h3>DCIR</h3><div class="media"><img loading="lazy" src="./assets/images/DCIR_Push-Pull.png" alt="DCIR Push-Pull"></div></figure>
-      <figure class="card"><h3>Ground Truth</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/groundtruth/GT_Push-Pull.mp4" type="video/mp4"></video></div></figure>
-      <figure class="card"><h3>Model Prediction</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/prediction/ypred_Push-Pull.mp4" type="video/mp4"></video></div></figure>
+      <figure class="card">
+        <h3>DCIR</h3>
+        <div class="media">
+          <img src="./assets/images/DCIR_Push-Pull.png" alt="DCIR Push-Pull">
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Ground Truth</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/groundtruth/GT_Push-Pull.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Prediction</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/prediction/ypred_Push-Pull.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
     </div>
   </section>
 
-  <!-- Rotate -->
-  <section class="section">
-    <h2>Rotate</h2>
+  <section>
+    <h2 style="margin:0 0 12px 0;font-size:20px">Rotate</h2>
     <div class="row">
-      <figure class="card"><h3>DCIR</h3><div class="media"><img loading="lazy" src="./assets/images/DCIR_Rotate.png" alt="DCIR Rotate"></div></figure>
-      <figure class="card"><h3>Ground Truth</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/groundtruth/GT_Rotate.mp4" type="video/mp4"></video></div></figure>
-      <figure class="card"><h3>Model Prediction</h3><div class="media"><video controls preload="metadata" playsinline><source src="./assets/videos/prediction/ypred_Rotate.mp4" type="video/mp4"></video></div></figure>
+      <figure class="card">
+        <h3>DCIR</h3>
+        <div class="media">
+          <img src="./assets/images/DCIR_Rotate.png" alt="DCIR Rotate">
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Ground Truth</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/groundtruth/GT_Rotate.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
+      <figure class="card">
+        <h3>Prediction</h3>
+        <div class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/videos/prediction/ypred_Rotate.mp4" type="video/mp4">
+          </video>
+        </div>
+      </figure>
     </div>
   </section>
 
@@ -119,16 +186,8 @@ footer{margin-top:28px;color:var(--muted);font-size:12px}
 
 <script>
 const vids = Array.from(document.querySelectorAll('video'));
-document.getElementById('playAll').onclick  = () => vids.forEach(v => { try{ v.play(); }catch(e){} });
-document.getElementById('pauseAll').onclick = () => vids.forEach(v => v.pause());
-let muted=false;
-document.getElementById('muteAll').onclick  = (e)=>{ muted=!muted; vids.forEach(v=>v.muted=muted); e.target.textContent = muted?'Unmute All':'Mute All'; };
-
-const btn = document.getElementById('toggleFit');
-btn.onclick = ()=> {
-  document.body.classList.toggle('stretch-mode');
-  btn.textContent = document.body.classList.contains('stretch-mode') ? '切换为等比适配' : '切换为拉伸填充';
-};
+document.getElementById('playAll').onclick = function(){ vids.forEach(function(v){ try{ v.play(); }catch(e){} }); };
+document.getElementById('pauseAll').onclick = function(){ vids.forEach(function(v){ try{ v.pause(); }catch(e){} }); };
 </script>
 </body>
 </html>
